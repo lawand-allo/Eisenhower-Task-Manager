@@ -3,7 +3,8 @@ package Task;
 import Category.Category;
 import Person.Person;
 
-import java.util.Date;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
 
 public class Task {
@@ -12,21 +13,22 @@ public class Task {
     private String note;
     private Category category;
     private Date dueDate;
-    private List<Person> responsiblePersons;
+    private Person responsiblePerson;
     private Status status;
     private boolean isImportant;
     private boolean isUrgent;
 
-    public Task(String name, String note, Category category, Date dueDate, List<Person> responsiblePersons, boolean isImportant, boolean isUrgent) {
+    public Task(String name, String note, Category category, Date dueDate, Person responsiblePerson, boolean isImportant, boolean isUrgent) {
         this.name = name;
         this.note = note;
         this.category = category;
         this.dueDate = dueDate;
-        this.responsiblePersons = responsiblePersons;
+        this.responsiblePerson = responsiblePerson;
         this.status = Status.OPEN;
         this.isImportant = isImportant;
         this.isUrgent = isUrgent;
     }
+
 
     public String getName() {
         return name;
@@ -44,8 +46,8 @@ public class Task {
         return dueDate;
     }
 
-    public List<Person> getResponsiblePersons() {
-        return responsiblePersons;
+    public Person getResponsiblePerson() {
+        return responsiblePerson;
     }
 
     public Status getStatus() {
@@ -76,8 +78,8 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public void setResponsiblePersons(List<Person> responsiblePersons) {
-        this.responsiblePersons = responsiblePersons;
+    public void setResponsiblePerson(Person responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
     }
 
     public void setStatus(Status status) {
@@ -90,5 +92,18 @@ public class Task {
 
     public void setUrgent(boolean urgent) {
         isUrgent = urgent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return isImportant == task.isImportant && isUrgent == task.isUrgent && Objects.equals(name, task.name) && Objects.equals(note, task.note) && Objects.equals(category, task.category) && Objects.equals(dueDate, task.dueDate) && Objects.equals(responsiblePerson, task.responsiblePerson) && status == task.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, note, category, dueDate, responsiblePerson, status, isImportant, isUrgent);
     }
 }
