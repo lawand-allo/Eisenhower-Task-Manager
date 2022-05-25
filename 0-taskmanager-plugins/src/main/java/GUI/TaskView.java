@@ -10,11 +10,12 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddTaskView extends JFrame {
+public class TaskView extends JFrame {
     private final JPanel contentPane = new JPanel();
     private JTextField nameField;
     private JTextField noteField;
@@ -28,13 +29,17 @@ public class AddTaskView extends JFrame {
     private JRadioButton notUrgentRadioButton;
     private JButton confirmButton;
     private JButton cancelButton;
+    private JButton deleteTaskButton;
+    private JPanel deleteButtonPane;
     public ActionListener confirmButtonActionListener;
     private final RegularTaskManagerView parent;
+    private Task toBeEditedTask;
 
-    public AddTaskView(RegularTaskManagerView parent) {
+    public TaskView(RegularTaskManagerView parent) {
         $$$setupUI$$$();
-        setTitle("Add application.Task");
-        setUpClickListener();
+        setTitle("Add Task");
+        setUpClickListenerForAddTask();
+        contentPane.remove(deleteButtonPane);
         setContentPane(contentPane);
         this.parent = parent;
         for (Category category : parent.taskManager.getCategoryService().getAllCategories()) {
@@ -53,9 +58,75 @@ public class AddTaskView extends JFrame {
         ButtonGroup urgencyButtonsGroup = new ButtonGroup();
         urgencyButtonsGroup.add(urgentRadioButton);
         urgencyButtonsGroup.add(notUrgentRadioButton);
+
         setSize(400, 400);
         setVisible(true);
     }
+
+    public TaskView(RegularTaskManagerView parent, Task selectedTask) {
+        this.toBeEditedTask = selectedTask;
+        this.parent = parent;
+        $$$setupUI$$$();
+        setTitle("Edit Task");
+        setContentPane(contentPane);
+        for (Category category : parent.taskManager.getCategoryService().getAllCategories()) {
+            categoryField.addItem(category);
+        }
+        for (Person person : parent.taskManager.getPersonService().getAllPersons()) {
+            personField.addItem(person);
+        }
+        statusField.addItem(Status.OPEN);
+        statusField.addItem(Status.INPROGRESS);
+        statusField.addItem(Status.DONE);
+        nameField.setText(selectedTask.getName());
+        noteField.setText(selectedTask.getNote());
+        categoryField.setSelectedItem(selectedTask.getCategory());
+        personField.setSelectedItem(selectedTask.getResponsiblePerson());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = dateFormat.format(selectedTask.getDueDate());
+        dueDateField.setText(strDate);
+
+        statusField.setSelectedItem(selectedTask.getStatus());
+        ButtonGroup importanceButtonsGroup = new ButtonGroup();
+        importanceButtonsGroup.add(importantRadioButton);
+        importanceButtonsGroup.add(notImportantRadioButton);
+
+        ButtonGroup urgencyButtonsGroup = new ButtonGroup();
+        urgencyButtonsGroup.add(urgentRadioButton);
+        urgencyButtonsGroup.add(notUrgentRadioButton);
+        if (selectedTask.isUrgent()) {
+            urgentRadioButton.setSelected(true);
+        } else {
+            notUrgentRadioButton.setSelected(true);
+        }
+        if (selectedTask.isImportant()) {
+            importantRadioButton.setSelected(true);
+        } else {
+            notImportantRadioButton.setSelected(true);
+        }
+        setUpClickListenerForEditTask();
+        setSize(400, 400);
+        setVisible(true);
+    }
+
+    private void setUpClickListenerForEditTask() {
+        confirmButtonActionListener = e -> {
+            updateTask();
+            parent.updateTaskList();
+            dispose();
+        };
+
+        confirmButton.addActionListener(confirmButtonActionListener);
+
+        cancelButton.addActionListener(e -> dispose());
+
+        deleteTaskButton.addActionListener(e -> {
+            deleteTask();
+            parent.updateTaskList();
+            dispose();
+        });
+    }
+
 
     public void createUIComponents() {
     }
@@ -69,7 +140,7 @@ public class AddTaskView extends JFrame {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        contentPane.setLayout(new GridLayoutManager(9, 3, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(10, 3, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Name");
         contentPane.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -124,6 +195,12 @@ public class AddTaskView extends JFrame {
         cancelButton = new JButton();
         cancelButton.setText("cancel");
         contentPane.add(cancelButton, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        deleteButtonPane = new JPanel();
+        deleteButtonPane.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(deleteButtonPane, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        deleteTaskButton = new JButton();
+        deleteTaskButton.setText("delete Task");
+        deleteButtonPane.add(deleteTaskButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -140,11 +217,27 @@ public class AddTaskView extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected(), (Status) statusField.getSelectedItem());
+        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected());
         parent.taskManager.getTaskService().addTask(task);
     }
 
-    private void setUpClickListener() {
+    private void updateTask() {
+        Date dueDate = null;
+        try {
+            dueDate = new SimpleDateFormat("dd/MM/yyyy").parse(dueDateField.getText());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected());
+        task.setStatus((Status) statusField.getSelectedItem());
+        parent.taskManager.getTaskService().deleteTask(toBeEditedTask);
+        parent.taskManager.getTaskService().addTask(task);
+    }
+    private void deleteTask() {
+        parent.taskManager.getTaskService().deleteTask(toBeEditedTask);
+    }
+
+    private void setUpClickListenerForAddTask() {
         confirmButtonActionListener = e -> {
             addTask();
             parent.updateTaskList();

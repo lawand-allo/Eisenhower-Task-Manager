@@ -36,6 +36,10 @@ public class TaskService {
         return taskRepository.getTasksByStatus(status);
     }
 
+    public void deleteTask(Task task) {
+        taskRepository.removeTask(task);
+    }
+
 
 
 }

@@ -14,6 +14,9 @@ import repositiories.TaskRepositoryImplementation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 public class RegularTaskManagerView extends JFrame {
@@ -29,7 +32,7 @@ public class RegularTaskManagerView extends JFrame {
 
     public RegularTaskManagerView() {
         setContentPane(contentPane);
-        setTitle("application.Task Manager");
+        setTitle("Task Manager");
         setLocationRelativeTo(null);
         setSize(800, 500);
         setVisible(true);
@@ -141,7 +144,7 @@ public class RegularTaskManagerView extends JFrame {
             updateTaskList();
         });
         addTaskButton.addActionListener(e -> {
-            AddTaskView addTaskView = new AddTaskView(this);
+            TaskView taskView = new TaskView(this);
         });
 
         addPersonButton.addActionListener(e -> {
@@ -150,6 +153,16 @@ public class RegularTaskManagerView extends JFrame {
         categoriesButton.addActionListener(e -> {
             CategoriesView categoriesView = new CategoriesView(this);
         });
+        RegularTaskManagerView thisView = this;
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Task selectedTask  = taskJList.getSelectedValue();
+                    TaskView taskView = new TaskView(thisView, selectedTask);
+                }
+            }
+        };
+        taskJList.addMouseListener(mouseListener);
     }
 
     protected void updateTaskList() {

@@ -10,7 +10,7 @@ import java.awt.*;
 public class AddCategoryView extends JFrame {
     private JTextField textField1;
     private JPanel contentPane;
-    private JComboBox colorBox;
+    private JComboBox<Color> colorBox;
     private JButton cancelButton;
     private JButton confirmButton;
     private CategoriesView parent;
