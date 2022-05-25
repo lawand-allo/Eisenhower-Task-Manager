@@ -67,37 +67,16 @@ public class TaskRepositoryImplementation implements TaskRepository {
     }
 
     @Override
-    public List<Task> getOpenTasks() {
+    public List<Task> getTasksByStatus(Status status) {
         List<Task> tasks = new ArrayList<>();
         for (Task task: taskList) {
-            if (task.getStatus() == Status.OPEN) {
+            if (task.getStatus() == status) {
                 tasks.add(task);
             }
         }
         return tasks;
     }
 
-    @Override
-    public List<Task> getInProgressTasks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task: taskList) {
-            if (task.getStatus() == Status.INPROGRESS) {
-                tasks.add(task);
-            }
-        }
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getImportantTasks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task: taskList) {
-            if (task.isImportant()) {
-                tasks.add(task);
-            }
-        }
-        return tasks;
-    }
 
     @Override
     public List<Task> getUrgentTasks() {

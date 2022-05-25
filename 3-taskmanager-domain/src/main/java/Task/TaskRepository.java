@@ -17,11 +17,7 @@ public interface TaskRepository {
 
     List<Task> getTasksByCategory(Category category);
 
-    List<Task> getOpenTasks();
-
-    List<Task> getInProgressTasks();
-
-    List<Task> getImportantTasks();
+    List<Task> getTasksByStatus(Status status);
 
     List<Task> getUrgentTasks();
 

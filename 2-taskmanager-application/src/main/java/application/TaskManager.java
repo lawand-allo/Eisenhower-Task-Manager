@@ -1,6 +1,11 @@
+package application;
+
 import Category.CategoryRepository;
+import Task.TaskRepository;
+import application.Task.TaskService;
 import Person.PersonRepository;
-import Task.*;
+import application.Category.CategoryService;
+import application.Person.PersonService;
 
 
 public class TaskManager {
@@ -35,6 +40,7 @@ public class TaskManager {
     public PersonService getPersonService() {
         return personService;
     }
+
 
 
 }
