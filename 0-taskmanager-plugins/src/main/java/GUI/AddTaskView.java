@@ -43,6 +43,8 @@ public class AddTaskView extends JFrame {
         //test
         personField.addItem(new Person("lawand", "allo"));
         statusField.addItem(Status.OPEN);
+        statusField.addItem(Status.INPROGRESS);
+        statusField.addItem(Status.DONE);
         //test
         setSize(400, 400);
         setVisible(true);
@@ -131,7 +133,7 @@ public class AddTaskView extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected());
+        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected(), (Status) statusField.getSelectedItem());
         parent.taskManager.getTaskService().addTask(task);
     }
 

@@ -28,6 +28,17 @@ public class Task {
         this.isUrgent = isUrgent;
         this.uuid = UUID.randomUUID();
     }
+    public Task(String name, String note, Category category, Date dueDate, Person responsiblePerson, boolean isImportant, boolean isUrgent,Status status) {
+        this.name = name;
+        this.note = note;
+        this.category = category;
+        this.dueDate = dueDate;
+        this.responsiblePerson = responsiblePerson;
+        this.status = status;
+        this.isImportant = isImportant;
+        this.isUrgent = isUrgent;
+        this.uuid = UUID.randomUUID();
+    }
 
 
     public String getName() {

@@ -39,7 +39,6 @@ public class RegularTaskManagerView extends JFrame {
             filterTopicBox.addItem(topic);
         }
         setListener();
-        updateTaskList();
     }
 
     public static void main(String[] args) {
@@ -139,34 +138,7 @@ public class RegularTaskManagerView extends JFrame {
         });
 
         filterValueBox.addActionListener(e -> {
-            DefaultListModel<Task> model = new DefaultListModel<Task>();
-            switch ((FilterTopic) filterTopicBox.getSelectedItem()) {
-                case CATEGORY:
-                    for (Task task : taskManager.getTaskService().getTasksByCategory((Category) filterValueBox.getSelectedItem())) {
-                        model.addElement(task);
-                    }
-                    taskJList.setModel(model);
-                    return;
-                case PERSON:
-                    for (Task task : taskManager.getTaskService().getTasksByPerson((Person) filterValueBox.getSelectedItem())) {
-                        model.addElement(task);
-                    }
-                    return;
-                case STATUS:
-                    Status status = (Status) filterValueBox.getSelectedItem();
-                    List<Task> tasks = taskManager.getTaskService().getTasksByStatus(status);
-                    for (Task task : taskManager.getTaskService().getTasksByStatus((Status) filterValueBox.getSelectedItem())) {
-                        model.addElement(task);
-                    }
-                    taskJList.setModel(model);
-                    return;
-                default:
-                    for (Task task : taskManager.getTaskService().getAllTasks()) {
-                        model.addElement(task);
-                    }
-                    taskJList.setModel(model);
-                    return;
-            }
+            updateTaskList();
         });
         addTaskButton.addActionListener(e -> {
             AddTaskView addTaskView = new AddTaskView(this);
@@ -182,10 +154,33 @@ public class RegularTaskManagerView extends JFrame {
 
     protected void updateTaskList() {
         DefaultListModel<Task> model = new DefaultListModel<Task>();
-        for (Task task : taskManager.getTaskService().getAllTasks()) {
-            model.addElement(task);
+        switch ((FilterTopic) filterTopicBox.getSelectedItem()) {
+            case CATEGORY:
+                for (Task task : taskManager.getTaskService().getTasksByCategory((Category) filterValueBox.getSelectedItem())) {
+                    model.addElement(task);
+                }
+                taskJList.setModel(model);
+                return;
+            case PERSON:
+                for (Task task : taskManager.getTaskService().getTasksByPerson((Person) filterValueBox.getSelectedItem())) {
+                    model.addElement(task);
+                }
+                return;
+            case STATUS:
+                Status status = (Status) filterValueBox.getSelectedItem();
+                List<Task> tasks = taskManager.getTaskService().getTasksByStatus(status);
+                for (Task task : taskManager.getTaskService().getTasksByStatus((Status) filterValueBox.getSelectedItem())) {
+                    model.addElement(task);
+                }
+                taskJList.setModel(model);
+                return;
+            default:
+                for (Task task : taskManager.getTaskService().getAllTasks()) {
+                    model.addElement(task);
+                }
+                taskJList.setModel(model);
+                return;
         }
-        taskJList.setModel(model);
     }
 
 }
