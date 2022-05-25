@@ -2,14 +2,17 @@ package Category;
 
 import java.awt.*;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Category {
     private String name;
     private Color color;
+    private final UUID uuid;
 
     public Category(String name, Color color) {
         this.name = name;
         this.color = color;
+        this.uuid = UUID.randomUUID();
     }
 
     public String getName() {
@@ -25,11 +28,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(name, category.name) && Objects.equals(color, category.color);
+        return Objects.equals(name, category.name) && Objects.equals(color, category.color) && Objects.equals(uuid, category.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color);
+        return Objects.hash(name, color, uuid);
     }
 }
