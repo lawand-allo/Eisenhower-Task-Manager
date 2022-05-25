@@ -1,6 +1,9 @@
-package Task;
+package application.Person;
 
+import Person.Person;
 import Person.PersonRepository;
+
+import java.util.List;
 
 public class PersonService {
 
@@ -8,5 +11,9 @@ public class PersonService {
 
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
+    }
+
+    public List<Person> getAllPersons() {
+        return personRepository.getAllPersons();
     }
 }

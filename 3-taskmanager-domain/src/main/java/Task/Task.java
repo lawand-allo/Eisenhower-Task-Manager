@@ -3,9 +3,7 @@ package Task;
 import Category.Category;
 import Person.Person;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class Task {
 
@@ -111,5 +109,10 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(name, note, category, dueDate, responsiblePerson, status, isImportant, isUrgent, uuid);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
