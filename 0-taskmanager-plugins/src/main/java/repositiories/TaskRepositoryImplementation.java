@@ -54,6 +54,7 @@ public class TaskRepositoryImplementation implements TaskRepository {
         return tasks;
     }
 
+
     @Override
     public List<Task> getTasksByCategory(Category category) {
         List<Task> tasks = new ArrayList<>();
