@@ -34,6 +34,16 @@ public class TaskRepositoryImplementation implements TaskRepository {
     }
 
     @Override
+    public Task getTaskByUuid(UUID uuid) {
+        for (Task task: taskList) {
+            if (task.getUuid() == uuid) {
+                return task;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<Task> getTasksByResponsiblePerson(Person responsiblePerson) {
         List<Task> tasks = new ArrayList<>();
         for (Task task: taskList) {

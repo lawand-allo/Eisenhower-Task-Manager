@@ -17,6 +17,7 @@ public class Task {
     private Status status;
     private boolean isImportant;
     private boolean isUrgent;
+    private final UUID uuid;
 
     public Task(String name, String note, Category category, Date dueDate, Person responsiblePerson, boolean isImportant, boolean isUrgent) {
         this.name = name;
@@ -27,6 +28,7 @@ public class Task {
         this.status = Status.OPEN;
         this.isImportant = isImportant;
         this.isUrgent = isUrgent;
+        this.uuid = UUID.randomUUID();
     }
 
 
@@ -94,16 +96,20 @@ public class Task {
         isUrgent = urgent;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return isImportant == task.isImportant && isUrgent == task.isUrgent && Objects.equals(name, task.name) && Objects.equals(note, task.note) && Objects.equals(category, task.category) && Objects.equals(dueDate, task.dueDate) && Objects.equals(responsiblePerson, task.responsiblePerson) && status == task.status;
+        return isImportant == task.isImportant && isUrgent == task.isUrgent && Objects.equals(name, task.name) && Objects.equals(note, task.note) && Objects.equals(category, task.category) && Objects.equals(dueDate, task.dueDate) && Objects.equals(responsiblePerson, task.responsiblePerson) && status == task.status && Objects.equals(uuid, task.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, note, category, dueDate, responsiblePerson, status, isImportant, isUrgent);
+        return Objects.hash(name, note, category, dueDate, responsiblePerson, status, isImportant, isUrgent, uuid);
     }
 }

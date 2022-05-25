@@ -1,15 +1,18 @@
 package Person;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Person {
 
     private String name;
     private String surname;
+    private final UUID uuid;
 
     public Person(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        uuid = UUID.randomUUID();
     }
 
     public String getName() {
@@ -20,16 +23,20 @@ public class Person {
         return surname;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(name, person.name) && Objects.equals(surname, person.surname);
+        return Objects.equals(name, person.name) && Objects.equals(surname, person.surname) && Objects.equals(uuid, person.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname);
+        return Objects.hash(name, surname, uuid);
     }
 }
