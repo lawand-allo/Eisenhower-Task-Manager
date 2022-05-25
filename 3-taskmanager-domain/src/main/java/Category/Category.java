@@ -23,6 +23,10 @@ public class Category {
         return color;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
