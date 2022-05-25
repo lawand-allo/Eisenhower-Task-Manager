@@ -16,4 +16,8 @@ public class PersonService {
     public List<Person> getAllPersons() {
         return personRepository.getAllPersons();
     }
+
+    public void addPerson(Person person) {
+        personRepository.addPerson(person);
+    }
 }

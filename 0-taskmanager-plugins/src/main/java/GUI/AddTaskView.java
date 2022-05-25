@@ -18,10 +18,10 @@ public class AddTaskView extends JFrame {
     private final JPanel contentPane = new JPanel();
     private JTextField nameField;
     private JTextField noteField;
-    private JComboBox categoryField;
+    private JComboBox<Category> categoryField;
     private JTextField dueDateField;
-    private JComboBox personField;
-    private JComboBox statusField;
+    private JComboBox<Person> personField;
+    private JComboBox<Status> statusField;
     private JRadioButton importantRadioButton;
     private JRadioButton notImportantRadioButton;
     private JRadioButton urgentRadioButton;
@@ -29,22 +29,30 @@ public class AddTaskView extends JFrame {
     private JButton confirmButton;
     private JButton cancelButton;
     public ActionListener confirmButtonActionListener;
-    private RegularTaskManagerView parent;
+    private final RegularTaskManagerView parent;
 
     public AddTaskView(RegularTaskManagerView parent) {
         $$$setupUI$$$();
         setTitle("Add application.Task");
         setUpClickListener();
         setContentPane(contentPane);
-        //test
         this.parent = parent;
-        //test
-        //test
-        personField.addItem(new Person("lawand", "allo"));
+        for (Category category : parent.taskManager.getCategoryService().getAllCategories()) {
+            categoryField.addItem(category);
+        }
+        for (Person person : parent.taskManager.getPersonService().getAllPersons()) {
+            personField.addItem(person);
+        }
+        statusField.setEnabled(false);
         statusField.addItem(Status.OPEN);
-        statusField.addItem(Status.INPROGRESS);
-        statusField.addItem(Status.DONE);
-        //test
+
+        ButtonGroup importanceButtonsGroup = new ButtonGroup();
+        importanceButtonsGroup.add(importantRadioButton);
+        importanceButtonsGroup.add(notImportantRadioButton);
+
+        ButtonGroup urgencyButtonsGroup = new ButtonGroup();
+        urgencyButtonsGroup.add(urgentRadioButton);
+        urgencyButtonsGroup.add(notUrgentRadioButton);
         setSize(400, 400);
         setVisible(true);
     }

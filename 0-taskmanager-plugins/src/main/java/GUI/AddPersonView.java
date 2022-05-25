@@ -1,24 +1,35 @@
 package GUI;
 
+import Category.Category;
+import Person.Person;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class AddPersonView extends JFrame {
     private JPanel contentPane;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField nameField;
+    private JTextField surnameField;
     private JButton cancelButton;
     private JButton confirmButton;
+    private PersonsView parent;
 
-    public AddPersonView() {
+    public AddPersonView(PersonsView parent) {
+        this.parent = parent;
         setContentPane(contentPane);
         setTitle("Add Person");
         setSize(400, 400);
         setVisible(true);
+        cancelButton.addActionListener(e -> {
+            dispose();
+        });
+        confirmButton.addActionListener(e -> {
+            this.parent.parent.taskManager.getPersonService().addPerson(new Person(nameField.getText(), surnameField.getText()));
+            parent.updatePersonsList();
+            dispose();
+        });
     }
 
     {
@@ -39,15 +50,15 @@ public class AddPersonView extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("Label");
+        label1.setText("name");
         contentPane.add(label1, new GridConstraints(0, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
-        label2.setText("Label");
+        label2.setText("surname");
         contentPane.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField1 = new JTextField();
-        contentPane.add(textField1, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        textField2 = new JTextField();
-        contentPane.add(textField2, new GridConstraints(2, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        nameField = new JTextField();
+        contentPane.add(nameField, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        surnameField = new JTextField();
+        contentPane.add(surnameField, new GridConstraints(2, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         cancelButton = new JButton();
         cancelButton.setText("cancel");
         contentPane.add(cancelButton, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

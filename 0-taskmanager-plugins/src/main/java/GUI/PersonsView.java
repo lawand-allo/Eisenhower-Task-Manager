@@ -1,37 +1,37 @@
 package GUI;
 
 import Category.Category;
-import Task.Task;
+import Person.Person;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CategoriesView extends JFrame {
+public class PersonsView extends JFrame {
     private JPanel contentPane;
-    private JList<Category> categoriesJList;
-    private JButton addCategoryButton;
+    private JButton addPersonButton;
+    private JList<Person> personsJList;
     protected RegularTaskManagerView parent;
 
-    public CategoriesView(RegularTaskManagerView parent) {
+    public PersonsView(RegularTaskManagerView parent) {
         this.parent = parent;
         setContentPane(contentPane);
         setTitle("Categories");
         setSize(400, 400);
         setVisible(true);
-        updateCategoriesList();
-        addCategoryButton.addActionListener(e -> {
-            AddCategoryView addCategoryView = new AddCategoryView(this);
+        updatePersonsList();
+        addPersonButton.addActionListener(e -> {
+            AddPersonView addPersonView = new AddPersonView(this);
         });
     }
 
-    protected void updateCategoriesList() {
-        DefaultListModel<Category> model = new DefaultListModel<Category>();
-        for (Category category : parent.taskManager.getCategoryService().getAllCategories()) {
-            model.addElement(category);
+    protected void updatePersonsList() {
+        DefaultListModel<Person> model = new DefaultListModel<Person>();
+        for (Person person : parent.taskManager.getPersonService().getAllPersons()) {
+            model.addElement(person);
         }
-        categoriesJList.setModel(model);
+        personsJList.setModel(model);
     }
 
     {
@@ -53,11 +53,11 @@ public class CategoriesView extends JFrame {
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JScrollPane scrollPane1 = new JScrollPane();
         contentPane.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        categoriesJList = new JList();
-        scrollPane1.setViewportView(categoriesJList);
-        addCategoryButton = new JButton();
-        addCategoryButton.setText("Add Category");
-        contentPane.add(addCategoryButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        personsJList = new JList();
+        scrollPane1.setViewportView(personsJList);
+        addPersonButton = new JButton();
+        addPersonButton.setText("Add Person");
+        contentPane.add(addPersonButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

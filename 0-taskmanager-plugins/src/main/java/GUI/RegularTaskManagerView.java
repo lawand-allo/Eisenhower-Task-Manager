@@ -20,7 +20,7 @@ public class RegularTaskManagerView extends JFrame {
     private JPanel contentPane;
     private JButton addTaskButton;
     private JButton addPersonButton;
-    private JButton addCategoryButton;
+    private JButton categoriesButton;
     private JList<Task> taskJList;
     private JComboBox filterTopicBox;
     private JComboBox filterValueBox;
@@ -76,9 +76,9 @@ public class RegularTaskManagerView extends JFrame {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, BorderLayout.WEST);
-        addCategoryButton = new JButton();
-        addCategoryButton.setText("Edit Categories");
-        panel3.add(addCategoryButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        categoriesButton = new JButton();
+        categoriesButton.setText("Edit Categories");
+        panel3.add(categoriesButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         addPersonButton = new JButton();
         addPersonButton.setText("Edit Persons");
         panel3.add(addPersonButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -145,10 +145,10 @@ public class RegularTaskManagerView extends JFrame {
         });
 
         addPersonButton.addActionListener(e -> {
-            AddPersonView addPersonView = new AddPersonView();
+            PersonsView personsView = new PersonsView(this);
         });
-        addCategoryButton.addActionListener(e -> {
-            AddCategoryView addCategoryView = new AddCategoryView();
+        categoriesButton.addActionListener(e -> {
+            CategoriesView categoriesView = new CategoriesView(this);
         });
     }
 
