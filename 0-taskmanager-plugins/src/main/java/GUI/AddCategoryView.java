@@ -1,6 +1,7 @@
 package GUI;
 
 import Category.Category;
+import Task.Task;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -20,6 +21,7 @@ public class AddCategoryView extends JFrame {
         setContentPane(contentPane);
         setTitle("Add Category");
         setSize(400, 400);
+        colorBox.setRenderer(new ColoringCellRenderer());
         setVisible(true);
 
         colorBox.addItem(Color.BLUE);
@@ -81,6 +83,12 @@ public class AddCategoryView extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
+    private static class ColoringCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            c.setBackground(((Color) value));
+            return c;
+        }
+    }
 
 }

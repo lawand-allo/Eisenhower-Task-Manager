@@ -34,9 +34,9 @@ public class RegularTaskManagerView extends JFrame {
         setContentPane(contentPane);
         setTitle("Task Manager");
         setLocationRelativeTo(null);
+        taskJList.setCellRenderer(new ColoringCellRenderer());
         setSize(800, 500);
         setVisible(true);
-
         this.taskManager = new TaskManager(new TaskRepositoryImplementation(), new CategoryRepositoryImplementation(), new PersonRepositoryImplementation());
         for (FilterTopic topic : FilterTopic.values()) {
             filterTopicBox.addItem(topic);
@@ -80,10 +80,10 @@ public class RegularTaskManagerView extends JFrame {
         panel3.setLayout(new GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, BorderLayout.WEST);
         categoriesButton = new JButton();
-        categoriesButton.setText("Edit Categories");
+        categoriesButton.setText("Categories");
         panel3.add(categoriesButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         addPersonButton = new JButton();
-        addPersonButton.setText("Edit Persons");
+        addPersonButton.setText("Persons");
         panel3.add(addPersonButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         filterTopicBox = new JComboBox();
         panel3.add(filterTopicBox, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -115,7 +115,7 @@ public class RegularTaskManagerView extends JFrame {
 
         filterTopicBox.addActionListener(e -> {
             switch ((FilterTopic) filterTopicBox.getSelectedItem()) {
-                case ALL:
+                case NONE:
                     filterValueBox.removeAllItems();
                     return;
                 case CATEGORY:
@@ -157,7 +157,7 @@ public class RegularTaskManagerView extends JFrame {
         MouseListener mouseListener = new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    Task selectedTask  = taskJList.getSelectedValue();
+                    Task selectedTask = taskJList.getSelectedValue();
                     TaskView taskView = new TaskView(thisView, selectedTask);
                 }
             }
@@ -193,6 +193,14 @@ public class RegularTaskManagerView extends JFrame {
                 }
                 taskJList.setModel(model);
                 return;
+        }
+    }
+
+    private static class ColoringCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            c.setBackground(((Task) value).getCategory().getColor());
+            return c;
         }
     }
 

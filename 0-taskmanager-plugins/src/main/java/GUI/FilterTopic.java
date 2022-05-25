@@ -1,7 +1,7 @@
 package GUI;
 
 public enum FilterTopic {
-    ALL,
+    NONE,
     CATEGORY,
     PERSON,
     STATUS
