@@ -15,4 +15,8 @@ public class CategoryService {
     public List<Category> getAllCategories() {
         return categoryRepository.getAllCategories();
     }
+
+    public void addCategory(Category category) {
+        categoryRepository.addCategory(category);
+    }
 }

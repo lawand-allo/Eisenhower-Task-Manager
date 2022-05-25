@@ -38,7 +38,6 @@ public class AddTaskView extends JFrame {
         setContentPane(contentPane);
         //test
         this.parent = parent;
-        categoryField.addItem(new Category("homework", Color.BLUE));
         //test
         //test
         personField.addItem(new Person("lawand", "allo"));
