@@ -41,5 +41,19 @@ public class TaskService {
     }
 
 
+    public List<Task> getImportantAndNotUrgentTasks() {
+        return taskRepository.getImportantAndNotUrgentTasks();
+    }
 
+    public List<Task> getUnimportantAndUrgentTasks() {
+        return taskRepository.getUnimportantAndUrgentTasks();
+    }
+
+    public List<Task> getUnimportantAndNotUrgentTasks() {
+        return taskRepository.getUnimportantAndNotUrgentTasks();
+    }
+
+    public List<Task> getImportantAndUrgentTasks() {
+        return taskRepository.getImportantAndUrgentTasks();
+    }
 }

@@ -19,11 +19,13 @@ public interface TaskRepository {
 
     List<Task> getTasksByStatus(Status status);
 
-    List<Task> getUrgentTasks();
+    List<Task> getImportantAndNotUrgentTasks();
 
-    List<Task> getUnimportantTasks();
+    List<Task> getUnimportantAndUrgentTasks();
 
-    List<Task> getNotUrgentTasks();
+    List<Task> getUnimportantAndNotUrgentTasks();
+
+    List<Task> getImportantAndUrgentTasks();
 
     void addTask(Task task);
 

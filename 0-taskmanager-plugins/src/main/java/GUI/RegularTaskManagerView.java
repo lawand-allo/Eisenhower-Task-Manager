@@ -28,9 +28,18 @@ public class RegularTaskManagerView extends JFrame {
     private JComboBox filterTopicBox;
     private JComboBox filterValueBox;
     private JButton changeViewButton;
+    private JPanel taskListJPanel;
+    private JScrollPane tasksJScrollPane;
+    private JList list1;
+    private JList list2;
+    private JList list3;
+    private JList list4;
+    private JPanel eisenhowerJPanel;
     protected TaskManager taskManager;
+    private boolean eisenhowerModeOn;
 
     public RegularTaskManagerView() {
+        taskListJPanel.remove(eisenhowerJPanel);
         setContentPane(contentPane);
         setTitle("Task Manager");
         setLocationRelativeTo(null);
@@ -95,13 +104,44 @@ public class RegularTaskManagerView extends JFrame {
         changeViewButton = new JButton();
         changeViewButton.setText("Change View");
         panel3.add(changeViewButton, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel4, BorderLayout.CENTER);
-        final JScrollPane scrollPane1 = new JScrollPane();
-        panel4.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        taskListJPanel = new JPanel();
+        taskListJPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(taskListJPanel, BorderLayout.CENTER);
+        tasksJScrollPane = new JScrollPane();
+        taskListJPanel.add(tasksJScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         taskJList = new JList();
-        scrollPane1.setViewportView(taskJList);
+        tasksJScrollPane.setViewportView(taskJList);
+        eisenhowerJPanel = new JPanel();
+        eisenhowerJPanel.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
+        taskListJPanel.add(eisenhowerJPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        eisenhowerJPanel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        list1 = new JList();
+        scrollPane1.setViewportView(list1);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        eisenhowerJPanel.add(scrollPane2, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        list2 = new JList();
+        scrollPane2.setViewportView(list2);
+        final JScrollPane scrollPane3 = new JScrollPane();
+        eisenhowerJPanel.add(scrollPane3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        list3 = new JList();
+        scrollPane3.setViewportView(list3);
+        final JScrollPane scrollPane4 = new JScrollPane();
+        eisenhowerJPanel.add(scrollPane4, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        list4 = new JList();
+        scrollPane4.setViewportView(list4);
+        final JLabel label2 = new JLabel();
+        label2.setText("Important and Urgent");
+        eisenhowerJPanel.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Important and not Urgent");
+        eisenhowerJPanel.add(label3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label4 = new JLabel();
+        label4.setText("Unimportant and urgent");
+        eisenhowerJPanel.add(label4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("Unimportant and not Urgent");
+        eisenhowerJPanel.add(label5, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -163,36 +203,103 @@ public class RegularTaskManagerView extends JFrame {
             }
         };
         taskJList.addMouseListener(mouseListener);
+
+        changeViewButton.addActionListener(e -> {
+            changeLayout();
+        });
+    }
+
+    private void changeLayout() {
+        if (!eisenhowerModeOn) {
+            eisenhowerModeOn = true;
+            filterValueBox.setEnabled(false);
+            filterTopicBox.setEnabled(false);
+            taskListJPanel.remove(tasksJScrollPane);
+            taskListJPanel.setLayout(new GridLayoutManager(1, 1));
+            taskListJPanel.add(eisenhowerJPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+            updateTaskList();
+            repaint();
+            revalidate();
+        } else {
+            filterValueBox.setEnabled(true);
+            filterTopicBox.setEnabled(true);
+            eisenhowerModeOn = false;
+            taskListJPanel.remove(eisenhowerJPanel);
+            taskListJPanel.setLayout(new GridLayoutManager(1, 1));
+            taskListJPanel.add(tasksJScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+            updateTaskList();
+            repaint();
+            revalidate();
+
+        }
     }
 
     protected void updateTaskList() {
-        DefaultListModel<Task> model = new DefaultListModel<Task>();
-        switch ((FilterTopic) filterTopicBox.getSelectedItem()) {
-            case CATEGORY:
-                for (Task task : taskManager.getTaskService().getTasksByCategory((Category) filterValueBox.getSelectedItem())) {
-                    model.addElement(task);
-                }
-                taskJList.setModel(model);
-                return;
-            case PERSON:
-                for (Task task : taskManager.getTaskService().getTasksByPerson((Person) filterValueBox.getSelectedItem())) {
-                    model.addElement(task);
-                }
-                return;
-            case STATUS:
-                Status status = (Status) filterValueBox.getSelectedItem();
-                List<Task> tasks = taskManager.getTaskService().getTasksByStatus(status);
-                for (Task task : taskManager.getTaskService().getTasksByStatus((Status) filterValueBox.getSelectedItem())) {
-                    model.addElement(task);
-                }
-                taskJList.setModel(model);
-                return;
-            default:
-                for (Task task : taskManager.getTaskService().getAllTasks()) {
-                    model.addElement(task);
-                }
-                taskJList.setModel(model);
-                return;
+        if (eisenhowerModeOn) {
+            DefaultListModel<Task> model1 = new DefaultListModel<Task>();
+            for (Task task : taskManager.getTaskService().getImportantAndUrgentTasks()) {
+                model1.addElement(task);
+            }
+            JList<Task> importantAndUrgentTasks = new JList<Task>();
+            list1.setCellRenderer(new ColoringCellRenderer());
+            list1.setModel(model1);
+
+            DefaultListModel<Task> model2 = new DefaultListModel<Task>();
+            for (Task task : taskManager.getTaskService().getImportantAndNotUrgentTasks()) {
+                model2.addElement(task);
+            }
+            JList<Task> importantAndNotUrgentTasks = new JList<Task>();
+            list2.setCellRenderer(new ColoringCellRenderer());
+            list2.setModel(model2);
+
+            DefaultListModel<Task> model3 = new DefaultListModel<Task>();
+            for (Task task : taskManager.getTaskService().getUnimportantAndUrgentTasks()) {
+                model3.addElement(task);
+            }
+            JList<Task> unimportantAndUrgentTasks = new JList<Task>();
+            list3.setCellRenderer(new ColoringCellRenderer());
+            list3.setModel(model3);
+
+            DefaultListModel<Task> model4 = new DefaultListModel<Task>();
+            for (Task task : taskManager.getTaskService().getUnimportantAndNotUrgentTasks()) {
+                model4.addElement(task);
+            }
+            JList<Task> unimportantAndNotUrgentTasks = new JList<Task>();
+            list4.setCellRenderer(new ColoringCellRenderer());
+            list4.setModel(model4);
+
+
+
+
+        } else {
+            DefaultListModel<Task> model = new DefaultListModel<Task>();
+            switch ((FilterTopic) filterTopicBox.getSelectedItem()) {
+                case CATEGORY:
+                    for (Task task : taskManager.getTaskService().getTasksByCategory((Category) filterValueBox.getSelectedItem())) {
+                        model.addElement(task);
+                    }
+                    taskJList.setModel(model);
+                    return;
+                case PERSON:
+                    for (Task task : taskManager.getTaskService().getTasksByPerson((Person) filterValueBox.getSelectedItem())) {
+                        model.addElement(task);
+                    }
+                    return;
+                case STATUS:
+                    Status status = (Status) filterValueBox.getSelectedItem();
+                    List<Task> tasks = taskManager.getTaskService().getTasksByStatus(status);
+                    for (Task task : taskManager.getTaskService().getTasksByStatus((Status) filterValueBox.getSelectedItem())) {
+                        model.addElement(task);
+                    }
+                    taskJList.setModel(model);
+                    return;
+                default:
+                    for (Task task : taskManager.getTaskService().getAllTasks()) {
+                        model.addElement(task);
+                    }
+                    taskJList.setModel(model);
+                    return;
+            }
         }
     }
 
@@ -203,5 +310,6 @@ public class RegularTaskManagerView extends JFrame {
             return c;
         }
     }
+
 
 }

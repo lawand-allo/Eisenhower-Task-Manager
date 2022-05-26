@@ -79,10 +79,10 @@ public class TaskRepositoryImplementation implements TaskRepository {
 
 
     @Override
-    public List<Task> getUrgentTasks() {
+    public List<Task> getImportantAndNotUrgentTasks() {
         List<Task> tasks = new ArrayList<>();
         for (Task task: taskList) {
-            if (task.isUrgent()) {
+            if (!task.isUrgent()&&task.isImportant()) {
                 tasks.add(task);
             }
         }
@@ -90,10 +90,10 @@ public class TaskRepositoryImplementation implements TaskRepository {
     }
 
     @Override
-    public List<Task> getUnimportantTasks() {
+    public List<Task> getUnimportantAndUrgentTasks() {
         List<Task> tasks = new ArrayList<>();
         for (Task task: taskList) {
-            if (!task.isImportant()) {
+            if (!task.isImportant()&&task.isUrgent()) {
                 tasks.add(task);
             }
         }
@@ -101,10 +101,21 @@ public class TaskRepositoryImplementation implements TaskRepository {
     }
 
     @Override
-    public List<Task> getNotUrgentTasks() {
+    public List<Task> getUnimportantAndNotUrgentTasks() {
         List<Task> tasks = new ArrayList<>();
         for (Task task: taskList) {
-            if (!task.isUrgent()) {
+            if (!task.isImportant()&&!task.isUrgent()) {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
+    @Override
+    public List<Task> getImportantAndUrgentTasks() {
+        List<Task> tasks = new ArrayList<>();
+        for (Task task: taskList) {
+            if (task.isImportant()&&task.isUrgent()) {
                 tasks.add(task);
             }
         }
