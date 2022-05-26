@@ -30,10 +30,10 @@ public class RegularTaskManagerView extends JFrame {
     private JButton changeViewButton;
     private JPanel taskListJPanel;
     private JScrollPane tasksJScrollPane;
-    private JList list1;
-    private JList list2;
-    private JList list3;
-    private JList list4;
+    private JList<Task> list1;
+    private JList<Task> list2;
+    private JList<Task> list3;
+    private JList<Task> list4;
     private JPanel eisenhowerJPanel;
     protected TaskManager taskManager;
     private boolean eisenhowerModeOn;
@@ -53,7 +53,8 @@ public class RegularTaskManagerView extends JFrame {
         setListener();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         RegularTaskManagerView regularTaskManagerView = new RegularTaskManagerView();
     }
 
@@ -203,6 +204,47 @@ public class RegularTaskManagerView extends JFrame {
             }
         };
         taskJList.addMouseListener(mouseListener);
+
+        MouseListener mouseListener1 = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Task selectedTask = list1.getSelectedValue();
+                    TaskView taskView = new TaskView(thisView, selectedTask);
+                }
+            }
+        };
+        list1.addMouseListener(mouseListener1);
+
+        MouseListener mouseListener2 = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Task selectedTask = list2.getSelectedValue();
+                    TaskView taskView = new TaskView(thisView, selectedTask);
+                }
+            }
+        };
+        list2.addMouseListener(mouseListener2);
+
+        MouseListener mouseListener3 = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Task selectedTask = list3.getSelectedValue();
+                    TaskView taskView = new TaskView(thisView, selectedTask);
+                }
+            }
+        };
+        list3.addMouseListener(mouseListener3);
+
+
+        MouseListener mouseListener4 = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Task selectedTask = list4.getSelectedValue();
+                    TaskView taskView = new TaskView(thisView, selectedTask);
+                }
+            }
+        };
+        list4.addMouseListener(mouseListener4);
 
         changeViewButton.addActionListener(e -> {
             changeLayout();
