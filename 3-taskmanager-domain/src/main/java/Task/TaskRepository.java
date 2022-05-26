@@ -17,17 +17,15 @@ public interface TaskRepository {
 
     List<Task> getTasksByCategory(Category category);
 
-    List<Task> getOpenTasks();
+    List<Task> getTasksByStatus(Status status);
 
-    List<Task> getInProgressTasks();
+    List<Task> getImportantAndNotUrgentTasks();
 
-    List<Task> getImportantTasks();
+    List<Task> getUnimportantAndUrgentTasks();
 
-    List<Task> getUrgentTasks();
+    List<Task> getUnimportantAndNotUrgentTasks();
 
-    List<Task> getUnimportantTasks();
-
-    List<Task> getNotUrgentTasks();
+    List<Task> getImportantAndUrgentTasks();
 
     void addTask(Task task);
 
