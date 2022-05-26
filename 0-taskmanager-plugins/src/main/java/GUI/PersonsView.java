@@ -1,12 +1,14 @@
 package GUI;
 
-import Category.Category;
 import Person.Person;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class PersonsView extends JFrame {
     private JPanel contentPane;
@@ -22,8 +24,19 @@ public class PersonsView extends JFrame {
         setVisible(true);
         updatePersonsList();
         addPersonButton.addActionListener(e -> {
-            AddPersonView addPersonView = new AddPersonView(this);
+            PersonView personView = new PersonView(this);
         });
+
+        PersonsView thisView = this;
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Person selectedPerson = personsJList.getSelectedValue();
+                    PersonView personView = new PersonView(thisView, selectedPerson);
+                }
+            }
+        };
+        personsJList.addMouseListener(mouseListener);
     }
 
     protected void updatePersonsList() {

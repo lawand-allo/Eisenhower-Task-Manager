@@ -8,15 +8,17 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class AddPersonView extends JFrame {
+public class PersonView extends JFrame {
     private JPanel contentPane;
     private JTextField nameField;
     private JTextField surnameField;
     private JButton cancelButton;
     private JButton confirmButton;
+    private JButton deleteButton;
     private PersonsView parent;
 
-    public AddPersonView(PersonsView parent) {
+    public PersonView(PersonsView parent) {
+        contentPane.remove(deleteButton);
         this.parent = parent;
         setContentPane(contentPane);
         setTitle("Add Person");
@@ -30,6 +32,31 @@ public class AddPersonView extends JFrame {
             parent.updatePersonsList();
             dispose();
         });
+    }
+
+    public PersonView(PersonsView parent, Person selectedPerson) {
+        this.parent = parent;
+        nameField.setText(selectedPerson.getName());
+        surnameField.setText(selectedPerson.getSurname());
+        setContentPane(contentPane);
+        setTitle("Add Person");
+        setSize(400, 400);
+        setVisible(true);
+        cancelButton.addActionListener(e -> {
+            dispose();
+        });
+        confirmButton.addActionListener(e -> {
+            this.parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
+            this.parent.parent.taskManager.getPersonService().addPerson(new Person(nameField.getText(), surnameField.getText()));
+            parent.updatePersonsList();
+            dispose();
+        });
+        deleteButton.addActionListener(e -> {
+            this.parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
+            parent.updatePersonsList();
+            dispose();
+        });
+
     }
 
     {
@@ -59,12 +86,15 @@ public class AddPersonView extends JFrame {
         contentPane.add(nameField, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         surnameField = new JTextField();
         contentPane.add(surnameField, new GridConstraints(2, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        cancelButton = new JButton();
-        cancelButton.setText("cancel");
-        contentPane.add(cancelButton, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         confirmButton = new JButton();
         confirmButton.setText("confirm");
         contentPane.add(confirmButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cancelButton = new JButton();
+        cancelButton.setText("cancel");
+        contentPane.add(cancelButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        deleteButton = new JButton();
+        deleteButton.setText("delete");
+        contentPane.add(deleteButton, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

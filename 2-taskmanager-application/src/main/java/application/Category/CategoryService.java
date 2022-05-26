@@ -19,4 +19,8 @@ public class CategoryService {
     public void addCategory(Category category) {
         categoryRepository.addCategory(category);
     }
+
+    public void deleteCategory(Category category) {
+        categoryRepository.removeCategory(category);
+    }
 }

@@ -1,12 +1,14 @@
 package GUI;
 
 import Category.Category;
-import Task.Task;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class CategoriesView extends JFrame {
     private JPanel contentPane;
@@ -22,8 +24,18 @@ public class CategoriesView extends JFrame {
         setVisible(true);
         updateCategoriesList();
         addCategoryButton.addActionListener(e -> {
-            AddCategoryView addCategoryView = new AddCategoryView(this);
+            CategoryView categoryView = new CategoryView(this);
         });
+        CategoriesView thisView = this;
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Category selectedCategory = categoriesJList.getSelectedValue();
+                    CategoryView categoryView = new CategoryView(thisView, selectedCategory);
+                }
+            }
+        };
+        categoriesJList.addMouseListener(mouseListener);
     }
 
     protected void updateCategoriesList() {

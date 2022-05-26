@@ -20,4 +20,8 @@ public class PersonService {
     public void addPerson(Person person) {
         personRepository.addPerson(person);
     }
+
+    public void deletePerson(Person person) {
+        personRepository.removePerson(person);
+    }
 }
