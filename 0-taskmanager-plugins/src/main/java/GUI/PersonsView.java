@@ -19,7 +19,7 @@ public class PersonsView extends JFrame {
     public PersonsView(RegularTaskManagerView parent) {
         this.parent = parent;
         setContentPane(contentPane);
-        setTitle("Categories");
+        setTitle("Persons");
         setSize(400, 400);
         setVisible(true);
         updatePersonsList();

@@ -23,4 +23,8 @@ public class CategoryService {
     public void deleteCategory(Category category) {
         categoryRepository.removeCategory(category);
     }
+
+    public void updateCategory(Category category) {
+        categoryRepository.updateCategory(category);
+    }
 }

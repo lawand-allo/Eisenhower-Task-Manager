@@ -13,4 +13,6 @@ public interface PersonRepository {
     void addPerson(Person person);
 
     void removePerson(Person person);
+
+    void updatePerson(Person person);
 }

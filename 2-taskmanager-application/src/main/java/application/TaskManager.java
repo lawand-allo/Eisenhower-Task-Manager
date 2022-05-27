@@ -1,6 +1,9 @@
 package application;
 
+import Category.Category;
 import Category.CategoryRepository;
+import Person.Person;
+import Task.Task;
 import Task.TaskRepository;
 import application.Task.TaskService;
 import Person.PersonRepository;
@@ -10,20 +13,12 @@ import application.Person.PersonService;
 
 public class TaskManager {
 
-    private final TaskRepository taskRepository;
-    private final CategoryRepository categoryRepository;
-    private final PersonRepository personRepository;
-
     private final TaskService taskService;
 
     private final CategoryService categoryService;
     private final PersonService personService;
 
     public TaskManager(TaskRepository taskRepository, CategoryRepository categoryRepository, PersonRepository personRepository) {
-        this.taskRepository = taskRepository;
-        this.categoryRepository = categoryRepository;
-        this.personRepository = personRepository;
-
         this.taskService = new TaskService(taskRepository, categoryRepository);
         this.categoryService = new CategoryService(categoryRepository);
         this.personService = new PersonService(personRepository);
@@ -41,6 +36,22 @@ public class TaskManager {
         return personService;
     }
 
+    public boolean isCategoryInUse(Category category) {
+        for (Task task: getTaskService().getAllTasks()) {
+            if (task.getCategory() == category) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isPersonInUse(Person person) {
+        for (Task task: getTaskService().getAllTasks()) {
+            if (task.getResponsiblePerson() == person) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

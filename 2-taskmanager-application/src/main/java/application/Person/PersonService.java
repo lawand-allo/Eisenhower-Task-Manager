@@ -4,6 +4,7 @@ import Person.Person;
 import Person.PersonRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PersonService {
 
@@ -23,5 +24,9 @@ public class PersonService {
 
     public void deletePerson(Person person) {
         personRepository.removePerson(person);
+    }
+
+    public void updatePerson(Person person) {
+        personRepository.updatePerson(person);
     }
 }

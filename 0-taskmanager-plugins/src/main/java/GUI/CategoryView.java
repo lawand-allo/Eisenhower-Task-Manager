@@ -61,15 +61,22 @@ public class CategoryView extends JFrame {
             dispose();
         });
         confirmButton.addActionListener(e -> {
-            parent.parent.taskManager.getCategoryService().deleteCategory(selectedCategory);
-            parent.parent.taskManager.getCategoryService().addCategory(new Category(categoryName.getText(), (Color) colorBox.getSelectedItem()));
+            selectedCategory.setName(categoryName.getText());
+            selectedCategory.setColor( (Color) colorBox.getSelectedItem());
+            parent.parent.taskManager.getCategoryService().updateCategory(selectedCategory);
             parent.updateCategoriesList();
             dispose();
         });
         deleteButton.addActionListener(e -> {
-            parent.parent.taskManager.getCategoryService().deleteCategory(selectedCategory);
-            parent.updateCategoriesList();
-            dispose();
+            if (!parent.parent.taskManager.isCategoryInUse(selectedCategory)) {
+                parent.parent.taskManager.getCategoryService().deleteCategory(selectedCategory);
+                parent.updateCategoriesList();
+                dispose();
+            } else {
+                String message = "this category is currently in use within a task and cannot be deleted";
+                JOptionPane.showMessageDialog(this, message,"Error",JOptionPane.ERROR_MESSAGE);
+            }
+
         });
     }
 

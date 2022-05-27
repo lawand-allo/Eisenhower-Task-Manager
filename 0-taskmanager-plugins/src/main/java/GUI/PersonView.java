@@ -46,15 +46,22 @@ public class PersonView extends JFrame {
             dispose();
         });
         confirmButton.addActionListener(e -> {
-            this.parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
-            this.parent.parent.taskManager.getPersonService().addPerson(new Person(nameField.getText(), surnameField.getText()));
+            selectedPerson.setName(nameField.getText());
+            selectedPerson.setSurname(surnameField.getText());
+            this.parent.parent.taskManager.getPersonService().updatePerson(selectedPerson);
             parent.updatePersonsList();
             dispose();
         });
+
         deleteButton.addActionListener(e -> {
-            this.parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
-            parent.updatePersonsList();
-            dispose();
+            if (!parent.parent.taskManager.isPersonInUse(selectedPerson)) {
+                parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
+                parent.updatePersonsList();
+                dispose();
+            } else {
+                String message = "this person is currently in use within a task and cannot be deleted";
+                JOptionPane.showMessageDialog(this, message,"Error",JOptionPane.ERROR_MESSAGE);
+            }
         });
 
     }

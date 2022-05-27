@@ -35,6 +35,14 @@ public class Category {
         return Objects.equals(name, category.name) && Objects.equals(color, category.color) && Objects.equals(uuid, category.uuid);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, color, uuid);
