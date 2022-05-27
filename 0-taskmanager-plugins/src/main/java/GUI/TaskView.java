@@ -33,7 +33,7 @@ public class TaskView extends JFrame {
     private JPanel deleteButtonPane;
     public ActionListener confirmButtonActionListener;
     private final RegularTaskManagerView parent;
-    private Task toBeEditedTask;
+    private Task selectedTask;
 
     public TaskView(RegularTaskManagerView parent) {
         $$$setupUI$$$();
@@ -64,7 +64,7 @@ public class TaskView extends JFrame {
     }
 
     public TaskView(RegularTaskManagerView parent, Task selectedTask) {
-        this.toBeEditedTask = selectedTask;
+        this.selectedTask = selectedTask;
         this.parent = parent;
         $$$setupUI$$$();
         setTitle("Edit Task");
@@ -228,13 +228,21 @@ public class TaskView extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Task task = new Task(nameField.getText(), noteField.getText(), (Category) categoryField.getSelectedItem(), dueDate, (Person) personField.getSelectedItem(), importantRadioButton.isSelected(), urgentRadioButton.isSelected());
-        task.setStatus((Status) statusField.getSelectedItem());
-        parent.taskManager.getTaskService().deleteTask(toBeEditedTask);
-        parent.taskManager.getTaskService().addTask(task);
+
+        selectedTask.setName(nameField.getText());
+        selectedTask.setNote(noteField.getText());
+        selectedTask.setCategory((Category) categoryField.getSelectedItem());
+        selectedTask.setDueDate(dueDate);
+        selectedTask.setResponsiblePerson((Person) personField.getSelectedItem());
+        selectedTask.setImportant(importantRadioButton.isSelected());
+        selectedTask.setUrgent(urgentRadioButton.isSelected());
+        selectedTask.setStatus((Status) statusField.getSelectedItem());
+
+        parent.taskManager.getTaskService().updateTask(selectedTask);
     }
+
     private void deleteTask() {
-        parent.taskManager.getTaskService().deleteTask(toBeEditedTask);
+        parent.taskManager.getTaskService().deleteTask(selectedTask);
     }
 
     private void setUpClickListenerForAddTask() {

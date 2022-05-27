@@ -282,7 +282,6 @@ public class RegularTaskManagerView extends JFrame {
             for (Task task : taskManager.getTaskService().getImportantAndUrgentTasks()) {
                 model1.addElement(task);
             }
-            JList<Task> importantAndUrgentTasks = new JList<Task>();
             list1.setCellRenderer(new ColoringCellRenderer());
             list1.setModel(model1);
 
@@ -290,7 +289,6 @@ public class RegularTaskManagerView extends JFrame {
             for (Task task : taskManager.getTaskService().getImportantAndNotUrgentTasks()) {
                 model2.addElement(task);
             }
-            JList<Task> importantAndNotUrgentTasks = new JList<Task>();
             list2.setCellRenderer(new ColoringCellRenderer());
             list2.setModel(model2);
 
@@ -298,7 +296,6 @@ public class RegularTaskManagerView extends JFrame {
             for (Task task : taskManager.getTaskService().getUnimportantAndUrgentTasks()) {
                 model3.addElement(task);
             }
-            JList<Task> unimportantAndUrgentTasks = new JList<Task>();
             list3.setCellRenderer(new ColoringCellRenderer());
             list3.setModel(model3);
 
@@ -306,11 +303,8 @@ public class RegularTaskManagerView extends JFrame {
             for (Task task : taskManager.getTaskService().getUnimportantAndNotUrgentTasks()) {
                 model4.addElement(task);
             }
-            JList<Task> unimportantAndNotUrgentTasks = new JList<Task>();
             list4.setCellRenderer(new ColoringCellRenderer());
             list4.setModel(model4);
-
-
 
 
         } else {

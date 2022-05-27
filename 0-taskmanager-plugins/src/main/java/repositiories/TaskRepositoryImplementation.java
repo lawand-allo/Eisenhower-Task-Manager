@@ -6,6 +6,7 @@ import Task.Task;
 import Task.TaskRepository;
 import Task.Status;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,17 @@ public class TaskRepositoryImplementation implements TaskRepository {
     @Override
     public void removeTask(Task task) {
         taskList.remove(task);
+    }
+
+    @Override
+    public void updateTask(Task updatedTask) {
+        for (Iterator<Task> it = taskList.iterator(); it.hasNext(); ) {
+            Task task = it.next();
+            if (task.getUuid() == updatedTask.getUuid()) {
+                it.remove();
+            }
+        }
+        taskList.add(updatedTask);
     }
 
     @Override

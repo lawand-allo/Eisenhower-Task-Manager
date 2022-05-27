@@ -19,7 +19,7 @@ public class TaskManager {
     private final PersonService personService;
 
     public TaskManager(TaskRepository taskRepository, CategoryRepository categoryRepository, PersonRepository personRepository) {
-        this.taskService = new TaskService(taskRepository, categoryRepository);
+        this.taskService = new TaskService(taskRepository);
         this.categoryService = new CategoryService(categoryRepository);
         this.personService = new PersonService(personRepository);
     }

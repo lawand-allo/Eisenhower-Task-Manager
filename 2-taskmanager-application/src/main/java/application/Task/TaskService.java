@@ -12,7 +12,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository, CategoryRepository categoryRepository) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
@@ -38,6 +38,10 @@ public class TaskService {
 
     public void deleteTask(Task task) {
         taskRepository.removeTask(task);
+    }
+
+    public void updateTask(Task task) {
+        taskRepository.updateTask(task);
     }
 
 

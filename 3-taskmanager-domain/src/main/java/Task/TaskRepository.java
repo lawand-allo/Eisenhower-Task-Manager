@@ -32,5 +32,5 @@ public interface TaskRepository {
     void removeTask(Task task);
 
 
-
+    void updateTask(Task task);
 }
