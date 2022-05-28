@@ -8,7 +8,6 @@ public interface PersonRepository {
 
     List<Person> getAllPersons();
 
-
     void addPerson(Person person);
 
     void removePerson(Person person);
