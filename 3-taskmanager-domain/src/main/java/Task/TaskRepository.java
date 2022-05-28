@@ -11,8 +11,6 @@ public interface TaskRepository {
 
     List<Task> getAllTasks();
 
-    Task getTaskByUuid(UUID uuid);
-
     List<Task> getTasksByResponsiblePerson(Person responsiblePerson);
 
     List<Task> getTasksByCategory(Category category);

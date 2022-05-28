@@ -8,7 +8,6 @@ import Task.Status;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 public class TaskRepositoryImplementation implements TaskRepository {
     private final List<Task> taskList;
@@ -45,15 +44,6 @@ public class TaskRepositoryImplementation implements TaskRepository {
         return taskList;
     }
 
-    @Override
-    public Task getTaskByUuid(UUID uuid) {
-        for (Task task: taskList) {
-            if (task.getUuid() == uuid) {
-                return task;
-            }
-        }
-        return null;
-    }
 
     @Override
     public List<Task> getTasksByResponsiblePerson(Person responsiblePerson) {

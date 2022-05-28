@@ -8,7 +8,6 @@ public interface PersonRepository {
 
     List<Person> getAllPersons();
 
-    Person getPersonByUuid(UUID uuid);
 
     void addPerson(Person person);
 
