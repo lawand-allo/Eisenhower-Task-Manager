@@ -1,6 +1,5 @@
 package GUI;
 
-import Category.Category;
 import Person.Person;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -54,7 +53,7 @@ public class PersonView extends JFrame {
         });
 
         deleteButton.addActionListener(e -> {
-            if (!parent.parent.taskManager.isPersonInUse(selectedPerson)) {
+            if (!parent.parent.taskManager.isPersonUsedByAnyTask(selectedPerson)) {
                 parent.parent.taskManager.getPersonService().deletePerson(selectedPerson);
                 parent.updatePersonsList();
                 dispose();

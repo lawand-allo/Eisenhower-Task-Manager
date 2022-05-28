@@ -14,7 +14,6 @@ import application.Person.PersonService;
 public class TaskManager {
 
     private final TaskService taskService;
-
     private final CategoryService categoryService;
     private final PersonService personService;
 
@@ -36,7 +35,7 @@ public class TaskManager {
         return personService;
     }
 
-    public boolean isCategoryInUse(Category category) {
+    public boolean isCategoryUsedByAnyTask(Category category) {
         for (Task task: getTaskService().getAllTasks()) {
             if (task.getCategory() == category) {
                 return true;
@@ -44,7 +43,8 @@ public class TaskManager {
         }
         return false;
     }
-    public boolean isPersonInUse(Person person) {
+
+    public boolean isPersonUsedByAnyTask(Person person) {
         for (Task task: getTaskService().getAllTasks()) {
             if (task.getResponsiblePerson() == person) {
                 return true;
