@@ -279,28 +279,28 @@ public class RegularTaskManagerView extends JFrame {
     protected void updateTaskList() {
         if (eisenhowerModeOn) {
             DefaultListModel<Task> model1 = new DefaultListModel<Task>();
-            for (Task task : taskManager.getTaskService().getImportantAndUrgentTasks()) {
+            for (Task task : taskManager.getTaskService().getTaskByImportanceAndUrgency(true,true)) {
                 model1.addElement(task);
             }
             list1.setCellRenderer(new ColoringCellRenderer());
             list1.setModel(model1);
 
             DefaultListModel<Task> model2 = new DefaultListModel<Task>();
-            for (Task task : taskManager.getTaskService().getImportantAndNotUrgentTasks()) {
+            for (Task task : taskManager.getTaskService().getTaskByImportanceAndUrgency(true,false)) {
                 model2.addElement(task);
             }
             list2.setCellRenderer(new ColoringCellRenderer());
             list2.setModel(model2);
 
             DefaultListModel<Task> model3 = new DefaultListModel<Task>();
-            for (Task task : taskManager.getTaskService().getUnimportantAndUrgentTasks()) {
+            for (Task task : taskManager.getTaskService().getTaskByImportanceAndUrgency(false,true)) {
                 model3.addElement(task);
             }
             list3.setCellRenderer(new ColoringCellRenderer());
             list3.setModel(model3);
 
             DefaultListModel<Task> model4 = new DefaultListModel<Task>();
-            for (Task task : taskManager.getTaskService().getUnimportantAndNotUrgentTasks()) {
+            for (Task task : taskManager.getTaskService().getTaskByImportanceAndUrgency(false,false)) {
                 model4.addElement(task);
             }
             list4.setCellRenderer(new ColoringCellRenderer());

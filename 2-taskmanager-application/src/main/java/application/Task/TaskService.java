@@ -36,6 +36,10 @@ public class TaskService {
         return taskRepository.getTasksByStatus(status);
     }
 
+    public List<Task> getTaskByImportanceAndUrgency(boolean important, boolean urgent) {
+        return taskRepository.getTaskByImportanceAndUrgency(important,urgent);
+    }
+
     public void deleteTask(Task task) {
         taskRepository.removeTask(task);
     }
@@ -45,19 +49,4 @@ public class TaskService {
     }
 
 
-    public List<Task> getImportantAndNotUrgentTasks() {
-        return taskRepository.getImportantAndNotUrgentTasks();
-    }
-
-    public List<Task> getUnimportantAndUrgentTasks() {
-        return taskRepository.getUnimportantAndUrgentTasks();
-    }
-
-    public List<Task> getUnimportantAndNotUrgentTasks() {
-        return taskRepository.getUnimportantAndNotUrgentTasks();
-    }
-
-    public List<Task> getImportantAndUrgentTasks() {
-        return taskRepository.getImportantAndUrgentTasks();
-    }
 }
