@@ -1,7 +1,6 @@
 package application.Task;
 
 import Category.Category;
-import Category.CategoryRepository;
 import Person.Person;
 import Task.Task;
 import Task.TaskRepository;

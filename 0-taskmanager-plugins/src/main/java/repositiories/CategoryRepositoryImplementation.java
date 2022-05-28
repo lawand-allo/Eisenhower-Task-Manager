@@ -2,12 +2,10 @@ package repositiories;
 
 import Category.Category;
 import Category.CategoryRepository;
-import Person.Person;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 public class CategoryRepositoryImplementation implements CategoryRepository {
     private final List<Category> categoryList;
@@ -21,15 +19,6 @@ public class CategoryRepositoryImplementation implements CategoryRepository {
         return categoryList;
     }
 
-    @Override
-    public Category getCategoryByUuid(UUID uuid) {
-        for (Category category: categoryList) {
-            if (category.getUuid() == uuid) {
-                return category;
-            }
-        }
-        return null;
-    }
 
     @Override
     public void removeCategory(Category category) {

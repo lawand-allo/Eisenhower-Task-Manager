@@ -68,7 +68,7 @@ public class CategoryView extends JFrame {
             dispose();
         });
         deleteButton.addActionListener(e -> {
-            if (!parent.parent.taskManager.isCategoryInUse(selectedCategory)) {
+            if (!parent.parent.taskManager.isCategoryUsedByAnyTask(selectedCategory)) {
                 parent.parent.taskManager.getCategoryService().deleteCategory(selectedCategory);
                 parent.updateCategoriesList();
                 dispose();
