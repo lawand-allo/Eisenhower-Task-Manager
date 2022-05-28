@@ -89,45 +89,11 @@ public class TaskRepositoryImplementation implements TaskRepository {
         return tasks;
     }
 
-
     @Override
-    public List<Task> getImportantAndNotUrgentTasks() {
+    public List<Task> getTaskByImportanceAndUrgency(boolean important, boolean urgent) {
         List<Task> tasks = new ArrayList<>();
         for (Task task: getOpenOrInProgressTasks()) {
-            if (!task.isUrgent()&&task.isImportant()) {
-                tasks.add(task);
-            }
-        }
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getUnimportantAndUrgentTasks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task: getOpenOrInProgressTasks()) {
-            if (!task.isImportant()&&task.isUrgent()) {
-                tasks.add(task);
-            }
-        }
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getUnimportantAndNotUrgentTasks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task: getOpenOrInProgressTasks()) {
-            if (!task.isImportant()&&!task.isUrgent()) {
-                tasks.add(task);
-            }
-        }
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getImportantAndUrgentTasks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task: getOpenOrInProgressTasks()) {
-            if (task.isImportant()&&task.isUrgent()) {
+            if (task.isUrgent() == urgent && task.isImportant() == important) {
                 tasks.add(task);
             }
         }
